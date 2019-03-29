@@ -1,0 +1,180 @@
+<html>
+	
+  <head>
+	 <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Example of the Authorization Code flow with Spotify</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="Untitled-7.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body id="applicationInterface" style="margin:0px; margin-bottom: 0px; width= 100%; height: 100%;">
+      <button class="navbar-toggle offcanvas-toggle" type="button">
+	<i class="fa fa-bars fa-2x" style = " float: left; position: fixed; color: white; margin-right: 15px; visibility: visible;"></i>
+</button>
+    <div id="wrapper">
+    <div class = "spotify-content">
+ <div id="page-content-wrapper">
+          
+            
+		<div class="col-md-6"> 
+            <div id="myOverlay" class="overlay">
+            <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+                
+              <div class="overlay-content">
+                  <div class="col-md-6" style="height:100%; width: 100%; text-align: -webkit-center;  overflow: hidden; display:block; ">
+                    <input type="text" placeholder="Search.." name="search" oninput="search(this.value)">
+                    <table id="searchTable" class = "fixed" style=" margin-top: 19%; height:70%; width: 100%; text-align: -webkit-center;  overflow: auto; display:block; table-layout: fixed;">
+			  
+			         </table></div>
+                </div>
+            </div>
+            <button class="globalSearch" onclick="openSearch()"> Add a Track </button>
+        </div>
+	   
+	 <div class="row" style = "margin: 0px; ">
+		<div class="col-md-6" style="height:100%; width: 100%; text-align: -webkit-center;  overflow: auto; display:block; "> 
+			<input type="text" placeholder="Search.." id="spotify-searchbox" oninput="searchPlaylist(this.value)">
+			<table id="playlistTable" style="width:100%; color: white;">
+			
+			</table>
+		</div>
+		</div>
+    
+            
+        </div></div>
+        
+   
+<!--
+  <div class="col-md-6" style="">
+			<table id="queueTable" style="width:100%">
+			  
+			</table>
+		</div>
+	 </div>
+	 <div class="row">
+		<div class="col-md-6" style="height:40%;background-color: rgb(255,0,0,0.4); text-align:center; display:block; overflow:auto"> 
+			<input type="text" placeholder="Search.." id="globalSearch" oninput="search(this.value)">
+			<table id="searchTable" style="width:100%">
+			  
+			</table>
+        </div>
+		</div> 
+<div class="row" style="height:20%;background-color:rgb(0,0,0,0.4);text-align:-webkit-center">
+	       <button onclick="playSong()" id="playerPlay">Play</button>
+			<button onclick="nextSong()" id="nextSong">Next Song</button>
+			Volume<input type="range" min="0" max="100" value="100" id="volume" style="width:10%">
+			
+	 </div>-->
+    <div class="spotify-left" id="sidebar-wrapper"><div class="sidebar-nav">
+        
+        <img src="images/logo.png" alt="Flowers in Chania" style="margin-right: auto; margin-left: 30px; margin-top: 20px; ">
+        <section id="musicsection">
+        <ul>
+            <li class = "asd"><a href="./queue.html" ><i class="fa fa-music" style = "color: white; margin-right: 10px;"></i>Now Playing</a></li>
+        <li><a href="./index.html"><i class="fa fa-list-ul" id = "a"  style = "color: white; margin-right: 10px;"></i>Playlist</a></li>
+            <li><a href="./recom.html"><i class="fa fa-heart" id = "a" style = "color: white; margin-right: 10px;"></i>Recommends</a></li>
+            <li><a href=""><i class="fa fa-cog" id = "a"  style = "color: white; margin-right: 10px;" ></i>Settings</a></li>
+             <li><a href="" ><i class="fa fa-sign-out" id = "a"  style = "color: white; margin-right: 10px;" ></i>Exit</a></li>
+            
+		</ul>
+        </section>  
+         </div>
+        </div>
+        
+        
+         <button class="navbar-toggle offcanvas-toggle" type="button"  style = "position: fixed; margin-top: -520px;">
+             <i class="fa fa-bars fa-2x" style = "position: sticky; color: white; margin-left: 0px;"></i>
+</button>
+        <!--
+		<div class="col-md-6" style="height:100%; width: 100%; background-color: rgb(0,255,0,0.4); text-align:center; overflow:auto;">Recommendation Part<table id="recommendationTable" style="width:100%">
+			</table>
+		</div>-->
+
+   <section id = "footer"> 
+<div class="row" style="height:20%; text-align:-webkit-center">
+			<button onclick="playSong()" id="playerPlay"><i class="fa fa-play fa-1x" style= "color: white;"></i></button>
+			<button onclick="nextSong()" id="nextSong"><i class="fa fa-step-forward fa-1x" style= "color: white;"></i></button>
+			Volume<input type="range" min="0" max="100" value="100" id="volume" style="width:10%">
+	 </div>
+         </section>
+	   
+ <div id="placeQR"></div>
+	<div class="row" style="background-color:rgb(0,255,0,0.4);text-align:-webkit-center">
+			<div class="col-md-4" style="display:black; overflow:auto; height:50%;">
+				<input type="text" placeholder="Search.." id="genreSearch" oninput="genreSearch(this.value)">
+				<table id="genresTable" style="margin:5%; background-color:white; width: -webkit-fill-available"></table>
+			</div>
+			<div class="col-md-4" style="display:black; overflow:auto; height:50%;">
+				<table id="placeGenresTable" style="margin:5%; background-color:white; width: -webkit-fill-available"></table>
+			</div>
+	 </div>
+	 
+	 <div class="row" style="background-color:rgb(255,0,0,0.4);text-align:-webkit-center">
+			
+	 </div>
+	
+      
+      <!--
+    
+    <div class="spotify-right">
+	<div id="placeinfo" class"row" style="background-color:rgb(0,0,0,0.4);text-align:-webkit-center">
+			<table style="width:50%">
+			<tr><th>Name:</th><th><input type="text" id="placeName" style="width:-webkit-fill-available;"></th></tr>
+			<tr><th>Information:</th><th><textarea id="placeInfo" rows="4" style="width:-webkit-fill-available;"></textarea></th></tr>
+			<tr><th>Address:</th><th><input type="text" id="placeAddr" style="width:-webkit-fill-available;"></th></tr>
+			<tr><th>Telephone:</th><th><input type="text" id="placeTel" style="width:-webkit-fill-available;"></th></tr>
+			<tr><th>E-mail:</th><th><input type="text" id="placeMail" style="width:-webkit-fill-available;"></th></tr>
+			<tr><th></th><th><button type="button" onclick="updatePlaceInfo()">Save</button></th></tr>
+			</table>
+			<input type="text" id="placePath" style="display:none"><br>
+			
+	</div>
+    </div>
+
+	<div class="main">
+		<form id="uploadimage" action="" method="post" enctype="multipart/form-data">
+			<div id="image_preview"><img id="previewing" src="images/noimage.png" style="max-width: 200px;max-height: 200px;"/></div>
+			<hr id="line">
+			<div id="selectImage">
+			<label>Select Your Image</label><br/>
+			<input type="file" name="file" id="file" required />
+			<input id="uploadButton" type="submit" value="Upload" class="submit" style="display: none"/>
+			</div>
+		</form>
+	</div>-->
+	<script>
+function openSearch() {
+  document.getElementById("myOverlay").style.display = "block";
+}
+
+function closeSearch() {
+  document.getElementById("myOverlay").style.display = "none";
+}
+        
+ </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="uploadImage.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="SettingsManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="RecommendationManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="PlaylistManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="QuizManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="PlayerManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="AccountManager.js"></script>
+	<script type="text/javascript" charset="UTF-8" src="webApiInterface.js"></script>
+<script>
+$(".navbar-toggle.offcanvas-toggle").click(function (e) {
+   e.preventDefault();
+   $("#wrapper").toggleClass("toggled");
+}); 
+</script>
+      </div>
+  </body>
+     
+
+
+
+</html>
